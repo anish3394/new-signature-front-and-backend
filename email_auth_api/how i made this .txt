@@ -1,0 +1,1 @@
+i am trying to make a django app that give rest api for login signup which only need email for login and only ask email for signup too and if email id in the database then it iwll send another json api of success and if not another api 

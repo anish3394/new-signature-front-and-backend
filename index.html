@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Animation</title>
+  <!-- Define the font using @font-face -->
+  <style>
+    @font-face {
+      font-family: 'Lovtony';
+      src: url('/fonts/lovtony/Lovtony Script.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="ml1" style="font-family: 'Lovtony', cursive; font-weight: 900; font-size: 3.5em;">
+    <span class="text-wrapper" style="position: relative; display: inline-block; padding-top: 0.1em; padding-right: 0.05em; padding-bottom: 0.15em;">
+      <span class="letters" style="display: inline-block; line-height: 1em;">anish kumar shrestha</span>
+    </span>
+  </h1>
+
+  <!-- Add Anime.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script>
+    // Function to capitalize the first letter of each word in the text
+    function capitalizeFirstLetter(text) {
+      return text.split(' ').map(word => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      }).join(' ');
+    }
+
+    // JavaScript to change the first letter of each word to uppercase
+    var textWrapper = document.querySelector('.ml1 .letters');
+    var originalText = textWrapper.textContent.trim(); // Get the original text
+    textWrapper.textContent = capitalizeFirstLetter(originalText); // Capitalize the first letter of each word
+
+    // Split each letter into a span for animation
+    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter' style='display: inline-block; line-height: 1em;'>$&</span>");
+
+    // Animation using anime.js
+    anime.timeline({loop: true})
+      .add({
+        targets: '.ml1 .letter',
+        scale: [0.3,1],
+        opacity: [0,1],
+        translateZ: 0,
+        easing: "easeOutExpo",
+        duration: 600,
+        delay: (el, i) => 70 * (i+1)
+      }).add({
+        targets: '.ml1 .line',
+        scaleX: [0,1],
+        opacity: [0.5,1],
+        easing: "easeOutExpo",
+        duration: 700,
+        offset: '-=875',
+        delay: (el, i, l) => 80 * (l - i)
+      }).add({
+        targets: '.ml1',
+        opacity: 0,
+        duration: 1000,
+        easing: "easeOutExpo",
+        delay: 1000
+      });
+  </script>
+
+</body>
+</html>
